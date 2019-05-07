@@ -6,6 +6,8 @@ var bodyParser = require("body-parser"),
     multer         = require("multer"),
     fs             = require("fs"),
     app            = express();
+    
+
 var News =require("./models/news");
 var newsRoutes  = require("./routes/news");
 // APP CONFIG

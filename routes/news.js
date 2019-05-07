@@ -1,12 +1,9 @@
-var bodyParser = require("body-parser"),
-    methodOverride = require("method-override"),
-    expressSanitizer = require("express-sanitizer"),
-    mongoose       = require("mongoose"),
-    express        = require("express"),
+var express        = require("express"),
     multer         = require("multer"),
     News           = require("../models/news");
     router            = express.Router();
 var News =require("../models/news");
+const path = require("path");
 
 //==============MEDIA STORAGE============================
 var storageImages = multer.diskStorage({
@@ -198,6 +195,30 @@ router.delete("/:id", function(req, res){
        }
    })
    //redirect somewhere
+});
+
+router.get("/:id/images", (req, res) => {
+    News.findById(req.params.id,function(err,foundNews){
+    if(err){
+        return res.json({error:err});
+    }
+    else{
+        var filename = foundNews.image[1];
+         return res.sendFile(path.join(__dirname, "../"+filename));
+    }
+    });
+});
+
+router.get("/:id/video", (req, res) => {
+    News.findById(req.params.id,function(err,foundNews){
+    if(err){
+        return res.json({error:err});
+    }
+    else{
+        var filename = foundNews.video;
+         return res.sendFile(path.join(__dirname, "../"+filename));
+    }
+    });
 });
 
 module.exports = router;
