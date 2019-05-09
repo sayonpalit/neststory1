@@ -5,11 +5,13 @@ var bodyParser = require("body-parser"),
     express        = require("express"),
     multer         = require("multer"),
     fs             = require("fs"),
-    app            = express();
+    app            = express(),
+    jwt            = require("jsonwebtoken");
     
 
 var News =require("./models/news");
 var newsRoutes  = require("./routes/news");
+var apiRoutes   = require("./routes/index");
 // APP CONFIG
 mongoose.connect("mongodb://localhost/neststory");
 app.set("view engine", "ejs");
@@ -25,6 +27,7 @@ app.get("/", function(req, res){
 });
 
 app.use("/news", newsRoutes);
+app.use("/api",apiRoutes);
 app.listen(3000,function(){
     console.log("SERVER IS RUNNING!");
 });
